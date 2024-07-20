@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { editUser } from '../features/users/usersSlice';
 import axios from 'axios';
 
-const EditUserForm = ({ userId, closeModal, updateUsers }) => {
+const EditUserForm = ({ userId, closeModal }) => {
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -41,63 +44,65 @@ const EditUserForm = ({ userId, closeModal, updateUsers }) => {
       formData.append('imgUrl', imgUrl);
     }
 
-    try {
-      const res = await axios.put(`http://localhost:5000/users/${userId}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('User updated successfully:', res.data);
-      closeModal();
-      updateUsers();
-    } catch (err) {
-      console.error('Error updating user:', err);
-    }
+    await dispatch(editUser({ id: userId, formData }));
+    closeModal();
   };
 
-  return(
+  return (
     <div>
-      <h2>Add User Information</h2>
-        <div>
-          <div style={{ 
-            width: '200px', 
-            height: '200px', 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            marginTop: '2px', 
+      <h2>Edit User Information</h2>
+      <div>
+        <div
+          style={{
+            width: '200px',
+            height: '200px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: '2px',
             marginBottom: '5px',
-            border: '1px solid black'
-          }}>
+            border: '1px solid black',
+          }}
+        >
           {imgPreview ? (
-          <img src={imgPreview} alt="Preview" 
-            style={{ 
-            maxHeight: '100%', 
-            maxWidth: '100%'
-          }} 
-          />
+            <img
+              src={imgPreview}
+              alt="Preview"
+              style={{
+                maxHeight: '100%',
+                maxWidth: '100%',
+              }}
+            />
           ) : (
             <span>No Image</span>
           )}
-          </div>
         </div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Name: <input type="text" value={name} onChange={(e) => setName(e.target.value)} required /></label>
-          </div>
-          <div>
-            <label>Username: <input type="email" value={username} onChange={(e) => setUsername(e.target.value)} required /></label>
-          </div>
-          <div>
-            <label>Password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required /></label>
-          </div>
-          <div>
-            <label>Image: <input type="file" onChange={handleImageChange} /></label>
-          </div>
-          <div>
-            <button type="submit">Save Changes</button>
-            </div>
-        </form>
+      </div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>
+            Name: <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+          </label>
+        </div>
+        <div>
+          <label>
+            Username: <input type="email" value={username} onChange={(e) => setUsername(e.target.value)} required />
+          </label>
+        </div>
+        <div>
+          <label>
+            Password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          </label>
+        </div>
+        <div>
+          <label>
+            Image: <input type="file" onChange={handleImageChange} />
+          </label>
+        </div>
+        <div>
+          <button type="submit">Save Changes</button>
+        </div>
+      </form>
     </div>
   );
 };
