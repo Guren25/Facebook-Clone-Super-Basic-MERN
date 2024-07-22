@@ -1,21 +1,46 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import UserTable from './pages/UserTable';
 import LoginRegisterPage from './pages/LoginRegisterPage';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Dashboard from './pages/Dashboard'; // Assume you will create this page later on
+import MainLayout from './components/MainLayout';
 
-function App() {
+const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <Router>
-      {isAuthenticated}
       <Routes>
-        <Route path="/" element={<LoginRegisterPage />} />
-        <Route path="/userTable" element={<UserTable />} />
+        <Route path="/loginregister" element={<LoginRegisterPage />} />
+        <Route
+          path="/usertable"
+          element={
+            isAuthenticated ? (
+              <MainLayout>
+                <UserTable />
+              </MainLayout>
+            ) : (
+              <Navigate to="/loginregister" />
+            )
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            isAuthenticated ? (
+              <MainLayout>
+                <Dashboard />
+              </MainLayout>
+            ) : (
+              <Navigate to="/loginregister" />
+            )
+          }
+        />
+        <Route path="*" element={<Navigate to="/loginregister" />} />
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;
