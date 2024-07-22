@@ -1,9 +1,11 @@
+// UserTable.jsx
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUsers, deleteUser } from '../features/users/usersSlice';
 import Modal from 'react-modal';
 import AddUserForm from '../components/AddUserForm';
 import EditUserForm from '../components/EditUserForm';
+import Login from '../components/Login';
 
 Modal.setAppElement('#root');
 
@@ -58,6 +60,7 @@ const UserTable = () => {
   const users = useSelector((state) => state.users.users);
   const userStatus = useSelector((state) => state.users.status);
   const error = useSelector((state) => state.users.error);
+  const loggedInUser = useSelector((state) => state.users.loggedInUser);
 
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -106,6 +109,10 @@ const UserTable = () => {
       console.error('Error deleting user:', err);
     }
   };
+
+  if (!loggedInUser) {
+    return <Login />;
+  }
 
   return (
     <div>

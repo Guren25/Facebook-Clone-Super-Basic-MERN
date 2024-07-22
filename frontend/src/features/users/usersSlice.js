@@ -30,6 +30,11 @@ export const deleteUser = createAsyncThunk('users/deleteUser', async (id) => {
   return id;
 });
 
+export const loginUser = createAsyncThunk('users/loginUser', async ({ username, password }) => {
+  const response = await axios.post('http://localhost:5000/users/login', { username, password });
+  return response.data;
+});
+
 // Slice
 const usersSlice = createSlice({
   name: 'users',
@@ -37,6 +42,7 @@ const usersSlice = createSlice({
     users: [],
     status: 'idle',
     error: null,
+    loggedInUser: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -63,6 +69,9 @@ const usersSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.users = state.users.filter(user => user._id !== action.payload);
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loggedInUser = action.payload.user;
       });
   },
 });
