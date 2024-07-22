@@ -5,7 +5,6 @@ import { fetchUsers, deleteUser } from '../features/users/usersSlice';
 import Modal from 'react-modal';
 import AddUserForm from '../components/AddUserForm';
 import EditUserForm from '../components/EditUserForm';
-import Login from '../components/Login';
 
 Modal.setAppElement('#root');
 
@@ -109,10 +108,6 @@ const UserTable = () => {
       console.error('Error deleting user:', err);
     }
   };
-
-  if (!loggedInUser) {
-    return <Login />;
-  }
 
   return (
     <div>
