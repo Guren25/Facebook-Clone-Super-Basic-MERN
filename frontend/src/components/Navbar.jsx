@@ -24,9 +24,11 @@ const Navbar = () => {
   return (
     <header className={isSolid ? 'solid' : 'transparent'}>
       <nav className='navbar'>
+      <div className="logo-container">
         <Link to="/dashboard" className="logo">
           <img src="src/assets/FacePolLogo.jpg" alt="Logo" />
         </Link>
+      </div>
         <ul className='nav-links'>
           <li><Link to="/usertable">User Database</Link></li>
           <li><Link to="/dashboard">Dashboard</Link></li>

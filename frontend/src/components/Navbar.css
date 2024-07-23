@@ -8,8 +8,13 @@
 }
 
 .navbar .logo img {
-  height: 30px;
+  height: 20px;
   padding: 5px;
+}
+
+.navbar .logo-container {
+  background-color: white;
+  padding: 10px;
   border-radius: 70%;
 }
 
