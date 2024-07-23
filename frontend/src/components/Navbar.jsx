@@ -1,14 +1,16 @@
-import React from 'react';
+// src/components/Navbar.jsx
+import React, { useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../features/users/authSlice';
-import './Navbar.css'; // Create a CSS file for Navbar styles
+import './Navbar.css';
 
 const Navbar = () => {
+  const [isSolid] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
-  const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -20,10 +22,17 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar">
-      <div className="navbar-content">
+    <header className={isSolid ? 'solid' : 'transparent'}>
+      <nav className='navbar'>
+        <Link to="/dashboard" className="logo">
+          <img src="src/assets/FacePolLogo.jpg" alt="Logo" />
+        </Link>
+        <ul className='nav-links'>
+          <li><Link to="/usertable">User Database</Link></li>
+          <li><Link to="/dashboard">Dashboard</Link></li>
+        </ul>
         {user && (
-          <>
+          <div className="navbar-user-section">
             <span className="navbar-user-name">{user.name}</span>
             <div className="navbar-user-img-container" onClick={toggleDropdown}>
               <img
@@ -37,14 +46,10 @@ const Navbar = () => {
                 </div>
               )}
             </div>
-          </>
+          </div>
         )}
-        <div className="navbar-links">
-          <button onClick={() => navigate('/usertable')}>User Table</button>
-          <button onClick={() => navigate('/dashboard')}>Dashboard</button>
-        </div>
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };
 

@@ -1,47 +1,65 @@
+/* src/components/Navbar.css */
 .navbar {
-    position: sticky;
-    top: 0;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .navbar-content {
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar-user-name {
-    margin-right: 10px;
-  }
-  
-  .navbar-user-img-container {
-    position: relative;
-    cursor: pointer;
-  }
-  
-  .navbar-user-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-  
-  .navbar-dropdown {
-    position: absolute;
-    top: 50px;
-    right: 0;
-    background-color: #fff;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    border-radius: 4px;
-  }
-  
-  .navbar-links {
-    display: flex;
-    gap: 10px;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #303f96;
+}
+
+.navbar .logo img {
+  height: 30px;
+  padding: 5px;
+  border-radius: 70%;
+}
+
+.navbar .nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar .nav-links li {
+  list-style: none;
+}
+
+.navbar .nav-links li a {
+  text-decoration: none;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.navbar-user-section {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-user-name {
+  margin-right: 10px;
+  color: white;
+}
+
+.navbar-user-img-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.navbar-user-img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+.navbar-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.navbar-dropdown button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
