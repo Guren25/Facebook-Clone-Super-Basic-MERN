@@ -34,8 +34,15 @@ const Dashboard = () => {
   return (
     <div>
       <Navbar />
-      <h1>Dashboard</h1>
-      <button onClick={() => setModalIsOpen(true)}>Add Post</button>
+      <button style={{
+        height: '40px',
+        width: '40px',
+        margin: '10px',
+        borderRadius: '70%',
+        backgroundColor: 'green',
+        border:'none',
+        color:'white'
+      }} onClick={() => setModalIsOpen(true)}>+</button>
       <AddPostModal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} />
       <div className="posts-container">
         {content}

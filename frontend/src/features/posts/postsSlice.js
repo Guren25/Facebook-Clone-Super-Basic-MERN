@@ -2,32 +2,52 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 // Thunks for async actions
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-  const response = await axios.get('http://localhost:5000/posts');
-  return response.data;
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (_, { rejectWithValue }) => {
+  try {
+    const response = await axios.get('http://localhost:5000/posts');
+    return response.data;
+  } catch (err) {
+    console.error('Error fetching posts:', err);
+    return rejectWithValue(err.response.data);
+  }
 });
 
-export const addPost = createAsyncThunk('posts/addPost', async (formData) => {
-  const response = await axios.post('http://localhost:5000/posts', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-  return response.data;
+export const addPost = createAsyncThunk('posts/addPost', async (formData, { rejectWithValue }) => {
+  try {
+    const response = await axios.post('http://localhost:5000/posts', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (err) {
+    console.error('Error adding post:', err);
+    return rejectWithValue(err.response.data);
+  }
 });
 
-export const editPost = createAsyncThunk('posts/editPost', async ({ id, formData }) => {
-  const response = await axios.put(`http://localhost:5000/posts/${id}`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-  return response.data;
+export const editPost = createAsyncThunk('posts/editPost', async ({ id, formData }, { rejectWithValue }) => {
+  try {
+    const response = await axios.put(`http://localhost:5000/posts/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (err) {
+    console.error('Error editing post:', err);
+    return rejectWithValue(err.response.data);
+  }
 });
 
-export const deletePost = createAsyncThunk('posts/deletePost', async (id) => {
-  await axios.delete(`http://localhost:5000/posts/${id}`);
-  return id;
+export const deletePost = createAsyncThunk('posts/deletePost', async (id, { rejectWithValue }) => {
+  try {
+    await axios.delete(`http://localhost:5000/posts/${id}`);
+    return id;
+  } catch (err) {
+    console.error('Error deleting post:', err);
+    return rejectWithValue(err.response.data);
+  }
 });
 
 // Slice

@@ -33,7 +33,7 @@ const upload = multer({ storage: storage });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-
+app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Working Properly!');
 });
@@ -49,3 +49,8 @@ app.use('/users', usersRouter);
 
 const postsRouter = require('./routes/posts');
 app.use('/posts', postsRouter);
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});

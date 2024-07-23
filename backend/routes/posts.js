@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
-const User = require('../models/User'); // Ensure User model is imported
+const User = require('../models/User');
 const multer = require('multer');
 const path = require('path');
 
@@ -34,27 +34,18 @@ router.post('/', upload.array('images', 12), async (req, res) => {
         await newPost.save();
         res.status(201).json(newPost);
     } catch (err) {
+        console.error('Error adding post:', err);
         res.status(400).json({ message: err.message });
     }
 });
 
-// Fetch all posts with user details
 router.get('/', async (req, res) => {
     try {
+        console.log('Fetching posts');
         const posts = await Post.find().populate('user', 'name username imgUrl').exec();
         res.json(posts);
     } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
-
-// Get a specific post
-router.get('/:id', async (req, res) => {
-    try {
-        const post = await Post.findById(req.params.id).populate('user', 'name username imgUrl');
-        if (!post) return res.status(404).json({ message: 'Post not found' });
-        res.json(post);
-    } catch (err) {
+        console.error('Error fetching posts:', err);
         res.status(500).json({ message: err.message });
     }
 });
@@ -74,6 +65,7 @@ router.put('/:id', upload.array('images', 10), async (req, res) => {
         if (!updatedPost) return res.status(404).json({ message: 'Post not found' });
         res.json(updatedPost);
     } catch (err) {
+        console.error('Error updating post:', err);
         res.status(400).json({ message: err.message });
     }
 });
@@ -85,6 +77,7 @@ router.delete('/:id', async (req, res) => {
         if (!post) return res.status(404).json({ message: 'Post not found' });
         res.json({ message: 'Post deleted' });
     } catch (err) {
+        console.error('Error deleting post:', err);
         res.status(500).json({ message: err.message });
     }
 });

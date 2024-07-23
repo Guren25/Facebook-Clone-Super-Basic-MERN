@@ -6,8 +6,7 @@ const PostCard = ({ post }) => {
   const user = post.user || {};
   const userName = user.name || 'Unknown';
   const userUsername = user.username || 'unknown';
-  const userImgUrl = user.imgUrl ? `http://localhost:5000/${user.imgUrl}` : 'default-user-image-url'; // Update with your default image URL
-
+  const userImgUrl = user.imgUrl ? `http://localhost:5000/${user.imgUrl}` : 'default-user-image-url';
   return (
     <div className="post-card">
       <div className="post-header">
