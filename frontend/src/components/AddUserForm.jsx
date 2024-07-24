@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../features/users/usersSlice';
+import './styles/AddUserForm.css';
 
 const AddUserForm = ({ closeModal }) => {
   const dispatch = useDispatch();
@@ -9,6 +10,7 @@ const AddUserForm = ({ closeModal }) => {
   const [password, setPassword] = useState('');
   const [imgUrl, setImgUrl] = useState(null);
   const [imgPreview, setImgPreview] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -29,57 +31,56 @@ const AddUserForm = ({ closeModal }) => {
   };
 
   return (
-    <div>
+    <div className="add-user-container">
       <h2>Add User Information</h2>
-      <div>
-        <div
-          style={{
-            width: '200px',
-            height: '200px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: '2px',
-            marginBottom: '5px',
-            border: '1px solid black',
-          }}
-        >
-          {imgPreview ? (
-            <img
-              src={imgPreview}
-              alt="Preview"
-              style={{
-                maxHeight: '100%',
-                maxWidth: '100%',
-              }}
-            />
-          ) : (
-            <span>No Image</span>
-          )}
-        </div>
+      <div className="image-preview-container">
+        {imgPreview ? (
+          <img src={imgPreview} alt="Preview" className="image-preview" />
+        ) : (
+          <span>No Image</span>
+        )}
       </div>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="add-user-form">
+        <div className="input-group">
           <label>
-            Name: <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+            Name:
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
           </label>
         </div>
-        <div>
+        <div className="input-group">
           <label>
-            Username: <input type="email" value={username} onChange={(e) => setUsername(e.target.value)} required />
+            Username:
+            <input type="email" value={username} onChange={(e) => setUsername(e.target.value)} required />
           </label>
         </div>
-        <div>
+        <div className="input-group">
           <label>
-            Password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            Password:
+            <input
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </label>
         </div>
-        <div className="img-only">
+        <div className="checkbox-group">
           <label>
-            Image: <input type="file" onChange={handleImageChange} required />
+            <input
+              type="checkbox"
+              checked={showPassword}
+              onChange={() => setShowPassword(!showPassword)}
+            />
+            Show Password
           </label>
         </div>
-        <div className="buttons-only">
+        <div className="input-group">
+          <label>
+            Image:
+            <input type="file" onChange={handleImageChange} required />
+          </label>
+        </div>
+        <div className="button-group">
           <button type="submit">Add User</button>
         </div>
       </form>

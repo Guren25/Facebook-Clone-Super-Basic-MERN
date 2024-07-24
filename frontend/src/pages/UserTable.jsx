@@ -1,10 +1,10 @@
-// src/pages/UserTable.jsx
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUsers, deleteUser } from '../features/users/usersSlice';
 import Modal from 'react-modal';
 import EditUserForm from '../components/EditUserForm';
 import Navbar from '../components/Navbar';
+import './styles/UserTable.css';
 
 Modal.setAppElement('#root');
 
@@ -64,13 +64,13 @@ const UserTable = () => {
   const [editUserId, setEditUserId] = useState(null);
   const [isImageModalOpen, setImageModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
+  const [showPasswords, setShowPasswords] = useState(false);
 
   useEffect(() => {
     if (userStatus === 'idle') {
       dispatch(fetchUsers());
     }
   }, [userStatus, dispatch]);
-
 
   const openEditModal = (id) => {
     setEditUserId(id);
@@ -103,43 +103,77 @@ const UserTable = () => {
   return (
     <div>
       <Navbar />
-      <h1>ALL USER INFORMATION DATABASE</h1>
-      {userStatus === 'loading' && <div>Loading...</div>}
-      {userStatus === 'succeeded' && (
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Username</th>
-              <th>Password</th>
-              <th>Image</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>{user.username}</td>
-                <td>{user.password}</td>
-                <td>
+      <div className="table-container">
+        <div className="password-toggle">
+          <label>
+            <input
+              type="checkbox"
+              checked={showPasswords}
+              onChange={() => setShowPasswords(!showPasswords)}
+              style={{ marginRight: '3px'}}
+            />
+            Show Passwords
+          </label>
+        </div>
+        <h1>ALL USER INFORMATION DATABASE</h1>
+        {userStatus === 'loading' && <div>Loading...</div>}
+        {userStatus === 'succeeded' && (
+          <div className="responsive-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Username</th>
+                  <th>Password</th>
+                  <th>Image</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user._id}>
+                    <td>{user.name}</td>
+                    <td>{user.username}</td>
+                    <td>{showPasswords ? user.password : '********'}</td>
+                    <td>
+                      <img
+                        src={`http://localhost:5000${user.imgUrl}`}
+                        alt={user.name}
+                        onClick={() => openImageModal(`http://localhost:5000${user.imgUrl}`)}
+                        style={{ width: '100px', height: '100px' }}
+                      />
+                    </td>
+                    <td>
+                      <button onClick={() => openEditModal(user._id)}>Edit</button>
+                      <button onClick={() => handleDelete(user._id)}>Delete</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="tile-view">
+              {users.map((user) => (
+                <div key={user._id} className="tile">
+                  <p><strong>Name:</strong> {user.name}</p>
+                  <p><strong>Username:</strong> {user.username}</p>
+                  <p><strong>Password:</strong> {showPasswords ? user.password : '********'}</p>
                   <img
                     src={`http://localhost:5000${user.imgUrl}`}
                     alt={user.name}
                     onClick={() => openImageModal(`http://localhost:5000${user.imgUrl}`)}
                     style={{ width: '100px', height: '100px' }}
                   />
-                </td>
-                <td>
-                  <button onClick={() => openEditModal(user._id)}>Edit</button>
-                  <button onClick={() => handleDelete(user._id)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-      {userStatus === 'failed' && <div>{error}</div>}
+                  <div className="tile-actions">
+                    <button onClick={() => openEditModal(user._id)}>Edit</button>
+                    <button onClick={() => handleDelete(user._id)}>Delete</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {userStatus === 'failed' && <div>{error}</div>}
+      </div>
 
       <Modal
         isOpen={isEditModalOpen}

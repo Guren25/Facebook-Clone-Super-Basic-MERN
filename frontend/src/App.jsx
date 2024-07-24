@@ -13,20 +13,20 @@ const App = () => {
     <Routes>
       <Route path="/loginregister" element={<LoginRegisterPage />} />
       <Route
-        path="/usertable"
+        path="/dashboard"
         element={
           isAuthenticated ? (
-            <UserTable />
+            <Dashboard />
           ) : (
             <Navigate to="/loginregister" />
           )
         }
       />
       <Route
-        path="/dashboard"
+        path="/usertable"
         element={
           isAuthenticated ? (
-            <Dashboard />
+            <UserTable />
           ) : (
             <Navigate to="/loginregister" />
           )

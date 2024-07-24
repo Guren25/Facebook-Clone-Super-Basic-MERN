@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import './PostCard.css';
+import './styles/PostCard.css';
 import ImageModal from './ImageModal';
+import { useDispatch } from 'react-redux';
+import { deletePost } from '../features/posts/postsSlice';
 
 const PostCard = ({ post }) => {
+  const dispatch = useDispatch(); 
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const user = post.user || {};
@@ -27,6 +30,10 @@ const PostCard = ({ post }) => {
   const prevImage = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + post.images.length) % post.images.length);
     setSelectedImage(post.images[(currentIndex - 1 + post.images.length) % post.images.length]);
+  };
+
+  const handleDelete = () => {
+    dispatch(deletePost(post._id));
   };
 
   return (
@@ -60,6 +67,9 @@ const PostCard = ({ post }) => {
           prevImage={prevImage}
         />
       )}
+      <div>
+        <h5 onClick={handleDelete}>Delete post</h5>
+      </div>
     </div>
   );
 };
