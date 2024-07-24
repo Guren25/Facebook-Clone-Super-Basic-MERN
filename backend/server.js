@@ -42,7 +42,8 @@ app.listen(port, () => {
     console.log(`Server is running at port: ${port}`);
 });
 
-app.use('/uploads', express.static('uploads'));
+// app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const usersRouter = require('./routes/users');
 app.use('/users', usersRouter);

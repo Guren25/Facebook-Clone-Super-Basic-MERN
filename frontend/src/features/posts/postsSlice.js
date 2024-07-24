@@ -1,15 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// Thunks for async actions
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (_, { rejectWithValue }) => {
-  try {
-    const response = await axios.get('http://localhost:5000/posts');
-    return response.data;
-  } catch (err) {
-    console.error('Error fetching posts:', err);
-    return rejectWithValue(err.response.data);
-  }
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
+  const response = await axios.get('http://localhost:5000/posts');
+  console.log(response.data);
+  return response.data;
 });
 
 export const addPost = createAsyncThunk('posts/addPost', async (formData, { rejectWithValue }) => {
@@ -76,13 +71,13 @@ const postsSlice = createSlice({
         state.posts.push(action.payload);
       })
       .addCase(editPost.fulfilled, (state, action) => {
-        const index = state.posts.findIndex(post => post._id === action.payload._id);
+        const index = state.posts.findIndex((post) => post._id === action.payload._id);
         if (index !== -1) {
           state.posts[index] = action.payload;
         }
       })
       .addCase(deletePost.fulfilled, (state, action) => {
-        state.posts = state.posts.filter(post => post._id !== action.payload);
+        state.posts = state.posts.filter((post) => post._id !== action.payload);
       });
   },
 });

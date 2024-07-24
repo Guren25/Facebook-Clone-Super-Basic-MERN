@@ -1,7 +1,6 @@
-// src/components/AddPostForm.jsx
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPost } from '../features/posts/postsSlice';
+import { addPost, fetchPosts } from '../features/posts/postsSlice';
 
 const AddPostForm = ({ closeModal }) => {
   const dispatch = useDispatch();
@@ -13,7 +12,7 @@ const AddPostForm = ({ closeModal }) => {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setImages(files);
-    setImgPreviews(files.map(file => URL.createObjectURL(file)));
+    setImgPreviews(files.map((file) => URL.createObjectURL(file)));
   };
 
   const handleSubmit = async (e) => {
@@ -23,7 +22,7 @@ const AddPostForm = ({ closeModal }) => {
       return;
     }
     const formData = new FormData();
-    formData.append('username', user.username);
+    formData.append('user', user._id);
     formData.append('description', description);
     images.forEach((image) => {
       formData.append('images', image);
@@ -34,6 +33,7 @@ const AddPostForm = ({ closeModal }) => {
     setImages([]);
     setImgPreviews([]);
     closeModal();
+    dispatch(fetchPosts());
   };
 
   return (
