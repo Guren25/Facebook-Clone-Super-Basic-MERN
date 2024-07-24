@@ -32,7 +32,7 @@ const AddUserForm = ({ closeModal }) => {
 
   return (
     <div className="add-user-container">
-      <h2>Add User Information</h2>
+      <h2>Register New User</h2>
       <div className="image-preview-container">
         {imgPreview ? (
           <img src={imgPreview} alt="Preview" className="image-preview" />

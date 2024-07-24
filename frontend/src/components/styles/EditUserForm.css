@@ -1,4 +1,4 @@
-.add-user-container {
+.edit-user-container {
     width: 100%;
     max-width: 400px;
     margin: auto;
@@ -31,7 +31,7 @@
     max-height: 100%;
   }
   
-  .add-user-form {
+  .edit-user-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -56,21 +56,12 @@
   
   .checkbox-group {
     display: flex;
-    align-items: center;
     gap: 10px;
-    margin-top: 5px;
   }
   
-  .checkbox-group input {
-    margin: 0;
-    width: 10px;
-    height: 10px;
-  }
-
   .button-group {
     display: flex;
     justify-content: center;
-
   }
   
   .button-group button {

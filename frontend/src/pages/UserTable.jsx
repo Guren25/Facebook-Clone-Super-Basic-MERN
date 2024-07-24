@@ -19,12 +19,12 @@ const customModalStyles = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
     width: '400px',
-    height: '750px',
+    height: '740px',
     padding: '20px',
     borderRadius: '20px',
-    boxShadow: '0 5px 15px rgba(0,0,0,.5)',
-    backgroundColor: 'white',
-    border: '2px solid black'
+    border: 'none',
+    background: '#2d69e1',
+    boxShadow:  '5px 5px 0px #204a9e',
   },
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.75)',
@@ -144,8 +144,16 @@ const UserTable = () => {
                       />
                     </td>
                     <td>
-                      <button onClick={() => openEditModal(user._id)}>Edit</button>
-                      <button onClick={() => handleDelete(user._id)}>Delete</button>
+                      <button 
+                        style={{
+                          backgroundColor: '#0077b6',
+                        }}
+                        onClick={() => openEditModal(user._id)}>Edit</button>
+                      <button 
+                        style={{
+                          backgroundColor: '#ef233c',
+                        }}
+                        onClick={() => handleDelete(user._id)}>Delete</button>
                     </td>
                   </tr>
                 ))}
@@ -164,8 +172,16 @@ const UserTable = () => {
                     style={{ width: '100px', height: '100px' }}
                   />
                   <div className="tile-actions">
-                    <button onClick={() => openEditModal(user._id)}>Edit</button>
-                    <button onClick={() => handleDelete(user._id)}>Delete</button>
+                    <button 
+                      style={{
+                        backgroundColor: '#0077b6',
+                      }}
+                      onClick={() => openEditModal(user._id)}>Edit</button>
+                    <button 
+                      style={{
+                        backgroundColor: '#ef233c',
+                      }}
+                      onClick={() => handleDelete(user._id)}>Delete</button>
                   </div>
                 </div>
               ))}
