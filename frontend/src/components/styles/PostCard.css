@@ -6,7 +6,7 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 500px;
-  height: 500px; /* Making it square */
+  height: 550px;
 }
 
 .post-header {
@@ -39,16 +39,19 @@
 }
 
 .post-images {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 10px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: red;
+  height: 350px;
+  width: 350px;
+  margin-bottom: 10px;
 }
 
 .post-image {
-  width: 120px; /* Uniform size */
-  height: 120px; /* Uniform size */
+  width: 50%;
+  height: 50%;
   object-fit: cover;
-  border-radius: 4px;
   cursor: pointer;
 }
 

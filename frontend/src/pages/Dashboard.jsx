@@ -6,6 +6,7 @@ import { fetchUsers } from '../features/users/usersSlice';
 import Navbar from '../components/Navbar';
 import PostCard from '../components/PostCard';
 import AddPostModal from '../components/AddPostModal';
+import './styles/Dashboard.css';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -37,18 +38,9 @@ const Dashboard = () => {
   }
 
   return (
-    <div>
+    <div className="dashboard">
       <Navbar />
-      <button style={{
-        height: '40px',
-        width: '40px',
-        margin: '10px',
-        borderRadius: '70%',
-        backgroundColor: 'green',
-        border:'none',
-        color:'white',
-        fontSize: '20px'
-      }} onClick={() => setModalIsOpen(true)}>+</button>
+      <div className="button-container"><button className="add-post-button" onClick={() => setModalIsOpen(true)}>Create new post!</button></div>
       <AddPostModal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} />
       <div className="posts-container">
         {content}
