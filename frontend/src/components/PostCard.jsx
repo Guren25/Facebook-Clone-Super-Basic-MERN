@@ -11,7 +11,7 @@ const PostCard = ({ post }) => {
   const user = post.user || {};
   const userName = user.name || 'Unknown';
   const userUsername = user.username || 'unknown';
-  const userImgUrl = user.imgUrl ? `http://localhost:5000${user.imgUrl}` : 'src/assets/Logo.png';
+  const userImgUrl = user.imgUrl ? `http://localhost:5000/${user.imgUrl}` : 'src/assets/Logo.png';
 
   const openModal = (index) => {
     setSelectedImage(post.images[index]);
@@ -45,7 +45,7 @@ const PostCard = ({ post }) => {
         <img src={userImgUrl} alt={userName} className="user-image" />
         <div className="user-info">
           <span className="user-name">{userName}</span>
-          <span className="user-username">{userUsername}</span>
+          <span className="user-username">@{userUsername}</span>
         </div>
       </div>
       <p className="post-description">{post.description}</p>
