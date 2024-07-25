@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts, deletePost } from '../features/posts/postsSlice';
 import { Link } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import ImageModal from './ImageModal'; // Import the modal component
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/Posts.css';
 
 const Posts = () => {
   const dispatch = useDispatch();
   const { posts, status, error } = useSelector((state) => state.posts);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
 
   useEffect(() => {
     if (status === 'idle') {
@@ -20,6 +22,15 @@ const Posts = () => {
 
   const handleDelete = (id) => {
     dispatch(deletePost(id));
+  };
+
+  const openModal = (images) => {
+    setSelectedImages(images);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   if (status === 'loading') {
@@ -60,14 +71,31 @@ const Posts = () => {
                 <Card.Text>{post.description}</Card.Text>
                 <div className="post-images-container">
                   <div className="d-flex flex-wrap">
-                    {post.images.map((image, index) => (
-                      <img
-                        key={index}
-                        src={`http://localhost:5000/${image}`}
-                        alt="Post"
-                        className="post-image"
-                      />
-                    ))}
+                    {post.images.length > 2 ? (
+                      <>
+                        {post.images.slice(0, 2).map((image, index) => (
+                          <img
+                            key={index}
+                            src={`http://localhost:5000/${image}`} // Use the resized image path
+                            alt="Post"
+                            className="post-image"
+                            onClick={() => openModal(post.images)} // Open modal with all images
+                          />
+                        ))}
+                        <Button variant="link" onClick={() => openModal(post.images)}>
+                          View all {post.images.length} images
+                        </Button>
+                      </>
+                    ) : (
+                      post.images.map((image, index) => (
+                        <img
+                          key={index}
+                          src={`http://localhost:5000/${image}`}
+                          className="post-image"
+                          onClick={() => openModal(post.images)} 
+                        />
+                      ))
+                    )}
                   </div>
                 </div>
               </Card.Body>
@@ -75,6 +103,7 @@ const Posts = () => {
           </Col>
         ))}
       </Row>
+      <ImageModal isOpen={isModalOpen} onRequestClose={closeModal} images={selectedImages} />
     </Container>
   );
 };

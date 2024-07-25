@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPost, fetchPosts } from '../features/posts/postsSlice';
-import { Button, Form, Modal, Spinner } from 'react-bootstrap';
+import { Button, Form, Spinner } from 'react-bootstrap';
 import './styles/AddPostForm.css'; 
+
 const AddPostForm = ({ closeModal }) => {
   const dispatch = useDispatch();
   const [description, setDescription] = useState('');
@@ -46,64 +47,59 @@ const AddPostForm = ({ closeModal }) => {
   };
 
   return (
-    <Modal show onHide={closeModal} centered className="add-post-form">
-      <Modal.Header closeButton>
-        <Modal.Title>Add Post</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="mb-3">
-          {imgPreviews.length > 0 ? (
-            <div className="d-flex flex-wrap">
-              {imgPreviews.map((src, index) => (
-                <img
-                  key={index}
-                  src={src}
-                  alt="Preview"
-                  className="img-thumbnail image-preview"
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="no-images">
-              <span>No Images</span>
-            </div>
-          )}
-        </div>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formDescription">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formImages">
-            <Form.Label>Images</Form.Label>
-            <Form.Control
-              type="file"
-              onChange={handleImageChange}
-              multiple
-              required
-              aria-describedby="imageHelp"
-            />
-            <Form.Text id="imageHelp" muted>
-              You can upload multiple images. Each image should be less than 5MB.
-            </Form.Text>
-          </Form.Group>
-          <Button
-            type="submit"
-            className="submit-btn"
-            disabled={loading}
-          >
-            {loading && <Spinner animation="border" size="sm" className="submit-btn-spinner" />}
-            Add Post
-          </Button>
-        </Form>
-      </Modal.Body>
-    </Modal>
+    <div className="add-post-form">
+      <div className="mb-3">
+        {imgPreviews.length > 0 ? (
+          <div className="d-flex flex-wrap">
+            {imgPreviews.map((src, index) => (
+              <img
+                key={index}
+                src={src}
+                alt="Preview"
+                className="img-thumbnail image-preview"
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="no-images">
+            <span>No Images</span>
+          </div>
+        )}
+      </div>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formDescription">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="formImages">
+          <Form.Label>Images</Form.Label>
+          <Form.Control
+            type="file"
+            onChange={handleImageChange}
+            multiple
+            required
+            aria-describedby="imageHelp"
+          />
+          <Form.Text id="imageHelp" muted>
+            You can upload multiple images. Each image should be less than 5MB.
+          </Form.Text>
+        </Form.Group>
+        <Button
+          type="submit"
+          className="submit-btn"
+          disabled={loading}
+        >
+          {loading && <Spinner animation="border" size="sm" className="submit-btn-spinner" />}
+          Add Post
+        </Button>
+      </Form>
+    </div>
   );
 };
 

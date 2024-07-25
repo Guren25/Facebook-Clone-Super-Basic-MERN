@@ -4,31 +4,14 @@ import { editUser } from '../features/users/usersSlice';
 import axios from 'axios';
 import './styles/EditUserForm.css'; // Import the CSS file
 
-const EditUserForm = ({ userId, closeModal }) => {
+const EditUserForm = ({ user, closeModal }) => { // Accept user as prop
   const dispatch = useDispatch();
-  const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState(user.name || ''); // Initialize with user data
+  const [username, setUsername] = useState(user.username || ''); // Initialize with user data
+  const [password, setPassword] = useState(''); // Keep password empty for security
   const [showPassword, setShowPassword] = useState(false);
   const [imgUrl, setImgUrl] = useState(null);
-  const [imgPreview, setImgPreview] = useState('');
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await axios.get(`http://localhost:5000/users/${userId}`);
-        setName(res.data.name);
-        setUsername(res.data.username);
-        setPassword(res.data.password);
-        setImgUrl(res.data.imgUrl);
-        setImgPreview(`http://localhost:5000${res.data.imgUrl}`);
-      } catch (err) {
-        console.error('Error fetching user:', err);
-      }
-    };
-
-    fetchUser();
-  }, [userId]);
+  const [imgPreview, setImgPreview] = useState(user.imgUrl ? `http://localhost:5000${user.imgUrl}` : ''); // Initialize with user data
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -46,8 +29,18 @@ const EditUserForm = ({ userId, closeModal }) => {
       formData.append('imgUrl', imgUrl);
     }
 
-    await dispatch(editUser({ id: userId, formData }));
-    closeModal();
+    const token = localStorage.getItem('token'); // Get the token from local storage
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; // Set the token in headers
+    }
+
+    try {
+      await dispatch(editUser({ id: user.id, formData }));
+      closeModal();
+    } catch (error) {
+      console.error('Error updating user:', error);
+      // Optionally, show an error message to the user
+    }
   };
 
   return (
@@ -74,7 +67,7 @@ const EditUserForm = ({ userId, closeModal }) => {
         </div>
         <div className="input-group">
           <label>
-            Username:
+            Email:
             <input
               type="email"
               value={username}

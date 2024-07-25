@@ -49,7 +49,7 @@ const AddUserForm = ({ closeModal }) => {
         </div>
         <div className="input-group">
           <label>
-            Username:
+            Email:
             <input type="email" value={username} onChange={(e) => setUsername(e.target.value)} required />
           </label>
         </div>

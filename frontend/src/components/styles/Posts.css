@@ -82,12 +82,14 @@
     overflow: hidden;
     border-radius: 4px;
     max-height: 300px;
+    height: 200px; 
   }
   
   .post-images {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    height: 200px;
   }
   
   .post-image {

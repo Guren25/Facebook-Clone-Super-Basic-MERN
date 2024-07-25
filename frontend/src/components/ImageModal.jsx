@@ -1,22 +1,16 @@
 import React from 'react';
-import './styles/ImageModal.css';
+import Modal from 'react-modal';
 
-const ImageModal = ({ image, closeModal, nextImage, prevImage }) => {
+const ImageModal = ({ isOpen, onRequestClose, images }) => {
   return (
-    <div className="image-modal">
-      <div className="modal-content">
-        <button className="close-button" onClick={closeModal}>
-          &times;
-        </button>
-        <button className="prev-button" onClick={prevImage}>
-          &lt;
-        </button>
-        <img src={image} alt="Modal View" className="modal-image" />
-        <button className="next-button" onClick={nextImage}>
-          &gt;
-        </button>
+    <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel="Image Gallery">
+      <button onClick={onRequestClose}>Close</button>
+      <div className="image-gallery">
+        {images.map((src, index) => (
+          <img key={index} src={`http://localhost:5000/${src}`} alt={`Post ${index}`} className="modal-image" />
+        ))}
       </div>
-    </div>
+    </Modal>
   );
 };
 

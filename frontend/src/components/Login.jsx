@@ -29,7 +29,7 @@ const Login = () => {
       <form onSubmit={handleSubmit} className="login-form">
         <div className="input-group">
           <label>
-            Username:
+            Email: 
             <input
               type="email"
               value={username}
