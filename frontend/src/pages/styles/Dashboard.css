@@ -1,43 +1,48 @@
 .dashboard {
-    background-color: white;
+  background-color: white;
+  width: 100%; /* Ensure full width */
+  max-width: none; /* Remove max-width restriction */
+  height: auto;
+  box-sizing: border-box;
+  margin: 0; /* Remove any margin */
+  padding: 0; /* Remove any padding */
 }
+.dashboard-content {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .add-post-button {
-    height: 50px;
-    width: auto;
-    padding: 0 20px;
-    margin-right: 10px;
-    border-radius: 25px;
-    background-color: #28a745;
-    border: none;
-    color: white;
-    font-size: 16px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-    text-align: center;
-  }
-  
-  .add-post-button:hover {
-    background-color: #218838;
-  }
-  
-  .posts-container {
-    margin-top: 20px;
-    display: flex;
-    gap: 5px;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .posts-container p {
-    font-size: 18px;
-    color: #333;
-  }
-  
-  .button-container {
-    color: #28a745;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-    position: fixed;
-  }
+  height: 50px;
+  padding: 0 20px;
+  border-radius: 25px;
+  background-color: #28a745;
+  border: none;
+  color: white;
+  font-size: 16px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.add-post-button:hover {
+  background-color: #218838;
+}
+
+.posts-container {
+  margin-top: 20px;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.posts-container p {
+  font-size: 18px;
+  color: #333;
+}

@@ -9,21 +9,20 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: #81bdfe;
+    background: #28a745;
+    width: 100%;
 }
 
 .sub-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 500px;  /* Adjusted width */
-    height: 300px;
-    padding: 20px;  /* Added padding */
+    width: 600px;  /* Increased width */
+    height: 400px;
+    padding: 20px;
     border-radius: 50px;
-    background: #2d69e1;
-    box-shadow:  5px 5px 0px #204a9e,
-                 -5px -5px 0px #3b89ff;
-    text-align: center;  /* Centered text */
+    background: white;
+    text-align: center;
 }
 
 .logo-container {
@@ -31,28 +30,24 @@
     justify-content: center;
     align-items: center;
     width: 250px;
-    height: 100px;
-    background: #ffffff;
-    box-shadow: inset -5px -5px 0px #e6e6e6,
-                inset 5px 5px 0px #ffffff;
-    border-radius: 70%;
-    margin-bottom: 50px;
-    margin-top: 20px;
+    height: auto;
+    border-radius: 30px;
+    margin: 20px 0 50px;
+    padding: 10px;
 }
 
 .logo-container img {
-    width: 150px;
-    height: 40px;
+    max-width: 30%;
+    height: auto;
 }
 
 button {
-    margin: 10px;  /* Added margin */
-    padding: 10px 30px;  /* Added padding */
+    padding: 10px 30px;
     width: 200px;
     border: none;
-    border-radius: 5px;  /* Rounded corners */
-    background-color: #ffffff;  /* Button color */
-    color: rgb(0, 0, 0);  /* Text color */
+    border-radius: 5px;
+    background-color: #28a745;
+    color: #ffffff;
     cursor: pointer;
     font-size: 20px;
     font-weight: bold;
@@ -60,10 +55,13 @@ button {
 }
 
 button:hover {
-    background-color: #c5ced6;
+    background-color: #218838;
 }
 
 button:focus {
     outline: none;
 }
 
+.text-center {
+    color: #218838;
+}

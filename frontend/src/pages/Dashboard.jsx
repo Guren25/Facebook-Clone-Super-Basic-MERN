@@ -5,6 +5,7 @@ import { fetchUsers } from '../features/users/usersSlice';
 import Navbar from '../components/Navbar';
 import Posts from '../components/Posts';
 import AddPostModal from '../components/AddPostModal';
+import { Button } from 'react-bootstrap';
 import './styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -36,18 +37,20 @@ const Dashboard = () => {
     content = <p>{error}</p>;
   }
 
-return (
+  return (
     <div className="dashboard">
-      <div>
-        <Navbar />
-        <div className="button-container"><button className="add-post-button" onClick={() => setModalIsOpen(true)}>Upload a new post</button></div>
+      <Navbar />
+      <div className="dashboard-content">
+        <Button className="add-post-button" onClick={() => setModalIsOpen(true)}>
+          Upload a new post
+        </Button>
         <AddPostModal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} />
-      </div>
-      <div>
-        <Posts />
+        <div className="posts-container">
+          <Posts />
+        </div>
       </div>
     </div>
   );
 };
 
-export default Dashboard; 
+export default Dashboard;

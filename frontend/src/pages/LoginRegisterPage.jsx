@@ -1,98 +1,49 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
+import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
 import Login from '../components/Login';
 import AddUserForm from '../components/AddUserForm';
 import './styles/LoginRegisterPage.css';
-import FacePolLogo from '../assets/FacePolLogo.jpg'; 
-
-Modal.setAppElement('#root');
-
-const LoginFormStyle = {
-  content: {
-    display: 'flex',
-    justifyContent: 'center',
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    width: '450px',
-    height: '400px',
-    padding: '20px',
-    borderRadius: '20px',
-    border: '2px solid black',
-    background: '#2d69e1',
-    boxShadow:  '5px 5px 0px #204a9e',
-  },
-  overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.75)',
-  },
-};
-
-const RegisterFormStyle = {
-  content: {
-    display: 'flex',
-    justifyContent: 'center',
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    width: '450px',
-    height: '850x',
-    padding: '20px',
-    borderRadius: '20px',
-    border: '2px solid black',
-    background: '#2d69e1',
-    boxShadow:  '5px 5px 0px #204a9e',
-  },
-  overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.75)',
-  },
-};
+import Shrekdit from '../assets/Shrekdit.png'; 
 
 const LoginRegisterPage = () => {
-  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
-  const [isRegisterModalOpen, setRegisterModalOpen] = useState(false);
-
-  const openLoginModal = () => setLoginModalOpen(true);
-  const closeLoginModal = () => setLoginModalOpen(false);
-
-  const openRegisterModal = () => setRegisterModalOpen(true);
-  const closeRegisterModal = () => setRegisterModalOpen(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   return (
-    <div className="main-container">
-      <div className='sub-container'>
-        <div className="logo-container">
-            <img src={FacePolLogo} alt="Logo" />
-        </div>
-        <div>
-          <button onClick={openLoginModal}>Login</button>
-          <button onClick={openRegisterModal}>Register</button>
-        </div>
+    <Container className="main-container">
+      <Row className='sub-container justify-content-center'>
+        <Col className="logo-container" md="auto">
+            <img src={Shrekdit} alt="Logo" />
+        </Col>
+        <Col md="auto" className="text-center">
+          <h2>Welcome to Shrekdit</h2>
+          <Button 
+            onClick={() => setShowLogin(true)} 
+            style={{ backgroundColor: '#28a745', borderColor: '#28a745', marginRight: '10px' }}
+          >
+            Login
+          </Button>
+          <Button 
+            onClick={() => setShowRegister(true)} 
+            style={{ backgroundColor: '#28a745', borderColor: '#28a745' }}
+          >
+            Register
+          </Button>
+        </Col>
         
-        <Modal
-          isOpen={isLoginModalOpen}
-          onRequestClose={closeLoginModal}
-          style={LoginFormStyle}
-          contentLabel='Login'
-        >
-          <Login closeModal={closeLoginModal}/>
+        <Modal show={showLogin} onHide={() => setShowLogin(false)} centered>
+          <Modal.Body>
+            <Login closeModal={() => setShowLogin(false)} />
+          </Modal.Body>
         </Modal>
 
-        <Modal
-          isOpen={isRegisterModalOpen}
-          onRequestClose={closeRegisterModal}
-          style={RegisterFormStyle}
-          contentLabel='Register'
-        >
-          <AddUserForm closeModal={closeRegisterModal}/>
+        <Modal show={showRegister} onHide={() => setShowRegister(false)} centered>
+          <Modal.Body>
+            <AddUserForm closeModal={() => setShowRegister(false)} />
+          </Modal.Body>
         </Modal>
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 };
 

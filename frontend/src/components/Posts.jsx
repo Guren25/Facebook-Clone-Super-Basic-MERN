@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts, deletePost } from '../features/posts/postsSlice';
 import { Link } from 'react-router-dom';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/Posts.css';
@@ -10,6 +10,7 @@ import './styles/Posts.css';
 const Posts = () => {
   const dispatch = useDispatch();
   const { posts, status, error } = useSelector((state) => state.posts);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
     if (status === 'idle') {
@@ -49,11 +50,6 @@ const Posts = () => {
                     </div>
                   </div>
                   <div>
-                    <Link to={`/edit/${post._id}`}>
-                      <Button variant="link" className="me-2">
-                        <FaEdit size={20} />
-                      </Button>
-                    </Link>
                     <Button variant="link" onClick={() => handleDelete(post._id)}>
                       <FaTrash size={20} />
                     </Button>
