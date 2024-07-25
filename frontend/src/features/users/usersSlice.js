@@ -1,14 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const token = localStorage.getItem('token');
+
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:5000',
+  headers: {
+    Authorization: token ? `Bearer ${token}` : '',
+  },
+});
+
 // Thunks for async actions
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-  const response = await axios.get('http://localhost:5000/users');
+  const response = await axiosInstance.get('/users');
   return response.data;
 });
 
 export const addUser = createAsyncThunk('users/addUser', async (formData) => {
-  const response = await axios.post('http://localhost:5000/users', formData, {
+  const response = await axiosInstance.post('/users', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -17,7 +26,7 @@ export const addUser = createAsyncThunk('users/addUser', async (formData) => {
 });
 
 export const editUser = createAsyncThunk('users/editUser', async ({ id, formData }) => {
-  const response = await axios.put(`http://localhost:5000/users/${id}`, formData, {
+  const response = await axiosInstance.put(`/users/${id}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -26,12 +35,14 @@ export const editUser = createAsyncThunk('users/editUser', async ({ id, formData
 });
 
 export const deleteUser = createAsyncThunk('users/deleteUser', async (id) => {
-  await axios.delete(`http://localhost:5000/users/${id}`);
+  await axiosInstance.delete(`/users/${id}`);
   return id;
 });
 
 export const loginUser = createAsyncThunk('users/loginUser', async ({ username, password }) => {
   const response = await axios.post('http://localhost:5000/users/login', { username, password });
+  const { token } = response.data;
+  localStorage.setItem('token', token); // Store token in local storage
   return response.data;
 });
 

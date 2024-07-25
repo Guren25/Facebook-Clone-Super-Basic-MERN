@@ -3,6 +3,8 @@ const User = require('../models/User');
 const multer = require('multer');
 const router = express.Router();
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -15,8 +17,23 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Middleware to protect routes
+const protect = (req, res, next) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ message: 'Not authorized, no token' });
+    }
+    try {
+        const decoded = jwt.verify(token, 'your_jwt_secret');
+        req.user = decoded;
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: 'Not authorized, token failed' });
+    }
+};
+
 //GET ALL
-router.get('/', async(req, res) => {
+router.get('/', protect, async(req, res) => {
     try{
         const users = await User.find();
         res.json(users);
@@ -26,7 +43,7 @@ router.get('/', async(req, res) => {
 });
 
 //GET by ID
-router.get('/:id', async(req, res) => {
+router.get('/:id', protect, async(req, res) => {
     try{
         const user = await User.findById(req.params.id);
         if(!user) return res.status(404).json({ message: 'User not found'});
@@ -54,7 +71,7 @@ router.post('/', upload.single('imgUrl'), async(req, res) => {
 });
 
 //PATCH user information
-router.put('/:id', upload.single('imgUrl'), async (req,res) =>{
+router.put('/:id', protect, upload.single('imgUrl'), async (req,res) =>{
     try {
         const user = await User.findById(req.params.id);
         if(!user) return res.status(404).json({ message: 'User not found'});
@@ -73,7 +90,7 @@ router.put('/:id', upload.single('imgUrl'), async (req,res) =>{
 });
 
 //DELETE user
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', protect, async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if(!user) return res.status(404).json({ message: 'User not found'});
@@ -84,16 +101,22 @@ router.delete('/:id', async (req, res) => {
         console.error('Error deleting User', err);
         res.status(500).json({ message: err.message});
     }
-})
+});
 
+// User Login
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
     try {
         const user = await User.findOne({ username });
-        if (!user || user.password !== password) {
+        if (!user || !(await user.comparePassword(password))) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-        res.status(200).json({ message: 'Login successful', user });
+
+        const token = jwt.sign({ id: user._id }, 'your_jwt_secret', {
+            expiresIn: '1d',
+        });
+
+        res.status(200).json({ message: 'Login successful', user, token });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
