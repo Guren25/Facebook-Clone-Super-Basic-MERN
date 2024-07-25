@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { deletePost } from '../features/posts/postsSlice';
 
 const PostCard = ({ post }) => {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const user = post.user || {};
@@ -36,6 +36,9 @@ const PostCard = ({ post }) => {
     dispatch(deletePost(post._id));
   };
 
+  const imageCount = post.images.length;
+  const displayedImages = imageCount > 4 ? post.images.slice(0, 3) : post.images;
+
   return (
     <div className="post-card">
       <div className="post-header">
@@ -46,8 +49,8 @@ const PostCard = ({ post }) => {
         </div>
       </div>
       <p className="post-description">{post.description}</p>
-      <div className="post-images">
-        {post.images.map((image, index) => (
+      <div className={`post-images ${imageCount > 3 ? 'post-images-4' : `post-images-${displayedImages.length}`}`}>
+        {displayedImages.map((image, index) => (
           <img
             key={index}
             src={`http://localhost:5000/${image}`}
@@ -56,6 +59,11 @@ const PostCard = ({ post }) => {
             onClick={() => openModal(index)}
           />
         ))}
+        {imageCount > 4 && (
+          <div className="post-image more-images" onClick={() => openModal(3)}>
+            +{imageCount - 3}
+          </div>
+        )}
       </div>
       <span className="post-date">{new Date(post.date).toLocaleString()}</span>
 
@@ -68,7 +76,11 @@ const PostCard = ({ post }) => {
         />
       )}
       <div>
-        <h5 onClick={handleDelete}>Delete post</h5>
+        <h5 onClick={handleDelete} 
+          style={{
+            color: 'gray',
+            cursor: 'pointer'
+          }}>Delete post</h5>
       </div>
     </div>
   );
