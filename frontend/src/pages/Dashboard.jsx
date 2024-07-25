@@ -1,10 +1,9 @@
-// src/pages/Dashboard.jsx
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from '../features/posts/postsSlice';
 import { fetchUsers } from '../features/users/usersSlice';
 import Navbar from '../components/Navbar';
-import PostCard from '../components/PostCard';
+import Posts from '../components/Posts';
 import AddPostModal from '../components/AddPostModal';
 import './styles/Dashboard.css';
 
@@ -37,16 +36,18 @@ const Dashboard = () => {
     content = <p>{error}</p>;
   }
 
-  return (
+return (
     <div className="dashboard">
-      <Navbar />
-      <div className="button-container"><button className="add-post-button" onClick={() => setModalIsOpen(true)}>Create new post!</button></div>
-      <AddPostModal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} />
-      <div className="posts-container">
-        {content}
+      <div>
+        <Navbar />
+        <div className="button-container"><button className="add-post-button" onClick={() => setModalIsOpen(true)}>Upload a new post</button></div>
+        <AddPostModal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} />
+      </div>
+      <div>
+        <Posts />
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default Dashboard; 

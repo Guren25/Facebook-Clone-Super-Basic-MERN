@@ -1,12 +1,10 @@
-// src/components/Navbar.jsx
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../features/users/authSlice';
 import './styles/Navbar.css';
 
 const Navbar = () => {
-  const [isSolid] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,13 +20,8 @@ const Navbar = () => {
   };
 
   return (
-    <header className={isSolid ? 'solid' : 'transparent'}>
+    <header>
       <nav className='navbar'>
-      <div className="logo-container">
-        <Link to="/dashboard" className="logo">
-          <img src="src/assets/FacePolLogo.jpg" alt="Logo" />
-        </Link>
-      </div>
         <ul className='nav-links'>
           <li><Link to="/usertable">User Database</Link></li>
           <li><Link to="/dashboard">Dashboard</Link></li>

@@ -1,121 +1,86 @@
-/* src/components/Navbar.css */
+/* src/components/styles/Navbar.css */
+
+header {
+  background-color: #28a745;
+  color: #fff; 
+  padding: 10px 20px; 
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #2d69e1;
-  height: 100px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.navbar .logo img {
-  height: auto;
-  padding: 5px;
-}
-
-.navbar .logo-container {
-  margin-top: 50px;
-  height: auto;
-  background-color: white;
-  padding: 10px;
-  border-radius: 70%;
-}
-
-.navbar .nav-links {
-  display: flex;
-  gap: 30px;
-}
-
-.navbar .nav-links li {
+.nav-links {
   list-style: none;
+  display: flex;
+  gap: 20px;
 }
 
-.navbar .nav-links li a {
-  text-decoration: none;
-  font-size: 30px;
-  color: #ffffff;
+.nav-links li {
+  margin: 0;
 }
 
-.navbar .nav-links li a:hover {
+.nav-links a {
+  color: #fff;
   text-decoration: none;
-  font-size: 30px;
-  color: rgba(139, 117, 117, 0.808);
+  font-size: 16px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-links a:hover {
+  background-color: #555; /* Slightly lighter on hover */
 }
 
 .navbar-user-section {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .navbar-user-name {
   margin-right: 10px;
-  color: white;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .navbar-user-img-container {
-  position: relative;
   cursor: pointer;
+  position: relative;
 }
 
 .navbar-user-img {
-  height: 60px;
-  width: 60px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  border: 2px solid #fff;
+  object-fit: cover;
 }
 
 .navbar-dropdown {
   position: absolute;
-  height: 50px;
-  width: 120px;
-  top: 90%;
-  right: 20%;
-  background: #fff;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  top: 50px; /* Adjust based on the size of the image */
+  right: 0;
+  background-color: #fff;
+  color: #333;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Make sure it appears on top */
 }
 
 .navbar-dropdown button {
-  width: 100px;
-  height: 30px;
-  background: red;
-  color: white;
-  margin-top: 8px;
-  margin-left: 9px;
+  background: none;
   border: none;
+  color: #333;
+  font-size: 16px;
   cursor: pointer;
-  font-size: 12px;
 }
 
-@media only screen and (max-width: 800px) {
-  .navbar .nav-links {
-    display: flex;
-    gap: 15px;
-  }
-  .navbar .nav-links li a {
-    font-size: 18px;
-  }
-  .navbar .nav-links li a:hover {
-    text-decoration: none;
-    font-size: 18px;
-    color: rgba(139, 117, 117, 0.808);
-  }
-  .navbar .logo-container {
-    margin-top: 50px;
-    margin-left: -10px;
-    height: 50px;
-    width: 150px;
-    background-color: white;
-    padding: 10px;
-    border-radius: 70%;
-  }
-  .navbar .logo img {
-    height: auto;
-    padding: 20px;
-  }
-
-  .navbar-user-name {
-    font-size: 0px;
-    visibility:collapse;
-  }
+.navbar-dropdown button:hover {
+  color: #007bff; /* Change color on hover */
 }

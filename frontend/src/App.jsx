@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import UserTable from './pages/UserTable';
 import LoginRegisterPage from './pages/LoginRegisterPage';
 import Dashboard from './pages/Dashboard';
+import Posts from './components/Posts';
 
 const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);

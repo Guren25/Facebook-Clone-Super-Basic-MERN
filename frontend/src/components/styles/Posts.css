@@ -1,0 +1,99 @@
+/* src/components/styles/Posts.css */
+
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .post {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+  }
+  
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative; /* Ensure proper positioning of child elements */
+  }
+  
+  .post-user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  .post-user-info h3 {
+    margin: 0;
+  }
+  
+  .post-user-info p {
+    margin: 0;
+    color: #555;
+  }
+  
+  .post-actions {
+    position: absolute; /* Position buttons at the top right */
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .edit-btn:hover {
+    color: #007bff;
+  }
+  
+  .delete-btn:hover {
+    color: #ff4d4d;
+  }
+  
+  .post-description {
+    margin: 0;
+  }
+  
+  .post-images-container {
+    overflow: hidden;
+    border-radius: 4px;
+    max-height: 300px;
+  }
+  
+  .post-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .post-image {
+    width: calc(50% - 10px); /* Adjust width to fit images in a grid */
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+  
