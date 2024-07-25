@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../features/users/authSlice';
+import { Navbar, Nav, NavDropdown, Image, Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/Navbar.css';
 
-const Navbar = () => {
+const NavBar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,37 +17,30 @@ const Navbar = () => {
     navigate('/loginregister');
   };
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
   return (
-    <header>
-      <nav className='navbar'>
-        <ul className='nav-links'>
-          <li><Link to="/usertable">User Database</Link></li>
-          <li><Link to="/dashboard">Dashboard</Link></li>
-        </ul>
+    <Navbar bg="success" variant="dark" expand="lg" className="navbar">
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="me-auto">
+          <Nav.Link as={Link} to="/usertable">User Database</Nav.Link>
+          <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+        </Nav>
         {user && (
-          <div className="navbar-user-section">
-            <span className="navbar-user-name">{user.name}</span>
-            <div className="navbar-user-img-container" onClick={toggleDropdown}>
-              <img
-                src={`http://localhost:5000${user.imgUrl}`}
-                alt={user.name}
-                className="navbar-user-img"
-              />
-              {dropdownOpen && (
-                <div className="navbar-dropdown">
-                  <button onClick={handleLogout}>Logout</button>
-                </div>
-              )}
-            </div>
-          </div>
+          <Nav className="ml-auto">
+            <NavDropdown
+              title={<><span className="navbar-user-name">{user.name}</span> <Image src={`http://localhost:5000${user.imgUrl}`} roundedCircle className="navbar-user-img" /></>}
+              id="basic-nav-dropdown"
+              align="end"
+              show={dropdownOpen}
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+            >
+              <NavDropdown.Item as="button" onClick={handleLogout}>Logout</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
         )}
-      </nav>
-    </header>
+      </Navbar.Collapse>
+    </Navbar>
   );
 };
 
-export default Navbar;
+export default NavBar;

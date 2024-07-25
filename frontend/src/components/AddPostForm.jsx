@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPost, fetchPosts } from '../features/posts/postsSlice';
-
+import { Button, Form, Modal, Spinner } from 'react-bootstrap';
+import './styles/AddPostForm.css'; 
 const AddPostForm = ({ closeModal }) => {
   const dispatch = useDispatch();
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
   const [imgPreviews, setImgPreviews] = useState([]);
+  const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.auth.user);
 
   const handleImageChange = (e) => {
@@ -21,6 +23,7 @@ const AddPostForm = ({ closeModal }) => {
       console.error("User is not logged in");
       return;
     }
+    setLoading(true);
     const formData = new FormData();
     formData.append('user', user._id);
     formData.append('description', description);
@@ -28,64 +31,79 @@ const AddPostForm = ({ closeModal }) => {
       formData.append('images', image);
     });
 
-    await dispatch(addPost(formData));
-    setDescription('');
-    setImages([]);
-    setImgPreviews([]);
-    closeModal();
-    dispatch(fetchPosts());
+    try {
+      await dispatch(addPost(formData));
+      setDescription('');
+      setImages([]);
+      setImgPreviews([]);
+      dispatch(fetchPosts());
+      closeModal();
+    } catch (error) {
+      console.error("Failed to add post:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div>
-      <h2>Add Post</h2>
-      <div>
-        {imgPreviews.length > 0 ? (
-          imgPreviews.map((src, index) => (
-            <img
-              key={index}
-              src={src}
-              alt="Preview"
-              style={{
-                maxHeight: '100px',
-                maxWidth: '100px',
-                margin: '10px',
-              }}
+    <Modal show onHide={closeModal} centered className="add-post-form">
+      <Modal.Header closeButton>
+        <Modal.Title>Add Post</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="mb-3">
+          {imgPreviews.length > 0 ? (
+            <div className="d-flex flex-wrap">
+              {imgPreviews.map((src, index) => (
+                <img
+                  key={index}
+                  src={src}
+                  alt="Preview"
+                  className="img-thumbnail image-preview"
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="no-images">
+              <span>No Images</span>
+            </div>
+          )}
+        </div>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formDescription">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
             />
-          ))
-        ) : (
-          <div
-            style={{
-              width: '200px',
-              height: '200px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginTop: '10px',
-              marginBottom: '10px',
-              border: '1px solid black',
-            }}
+          </Form.Group>
+          <Form.Group controlId="formImages">
+            <Form.Label>Images</Form.Label>
+            <Form.Control
+              type="file"
+              onChange={handleImageChange}
+              multiple
+              required
+              aria-describedby="imageHelp"
+            />
+            <Form.Text id="imageHelp" muted>
+              You can upload multiple images. Each image should be less than 5MB.
+            </Form.Text>
+          </Form.Group>
+          <Button
+            type="submit"
+            className="submit-btn"
+            disabled={loading}
           >
-            <span>No Images</span>
-          </div>
-        )}
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Description: <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
-          </label>
-        </div>
-        <div>
-          <label>
-            Images: <input type="file" onChange={handleImageChange} multiple required />
-          </label>
-        </div>
-        <div>
-          <button type="submit">Add Post</button>
-        </div>
-      </form>
-    </div>
+            {loading && <Spinner animation="border" size="sm" className="submit-btn-spinner" />}
+            Add Post
+          </Button>
+        </Form>
+      </Modal.Body>
+    </Modal>
   );
 };
 

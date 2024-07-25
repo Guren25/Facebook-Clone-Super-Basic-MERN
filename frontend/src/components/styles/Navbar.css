@@ -1,9 +1,8 @@
-/* src/components/styles/Navbar.css */
-
 header {
   background-color: #28a745;
   color: #fff; 
   padding: 10px 20px; 
+  width: 100%;
 }
 
 .navbar {
@@ -34,7 +33,7 @@ header {
 }
 
 .nav-links a:hover {
-  background-color: #555; /* Slightly lighter on hover */
+  background-color: #555;
 }
 
 .navbar-user-section {
@@ -66,7 +65,7 @@ header {
   top: 50px; /* Adjust based on the size of the image */
   right: 0;
   background-color: #fff;
-  color: #333;
+  color: #28a745;
   padding: 10px;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -74,13 +73,13 @@ header {
 }
 
 .navbar-dropdown button {
-  background: none;
+  background: #28a745;
   border: none;
-  color: #333;
+  color: white;
   font-size: 16px;
   cursor: pointer;
 }
 
 .navbar-dropdown button:hover {
-  color: #007bff; /* Change color on hover */
+  color: #28a745; /* Change color on hover */
 }

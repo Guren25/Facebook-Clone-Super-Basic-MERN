@@ -1,0 +1,66 @@
+/* General Styles */
+.add-post-form {
+  padding: 20px;
+}
+
+.add-post-form .modal-header {
+  border-bottom: none;
+}
+
+.add-post-form .modal-body {
+  background-color: #f8f9fa;
+}
+
+.add-post-form .form-group {
+  margin-bottom: 15px;
+}
+
+.add-post-form .form-label {
+  font-weight: bold;
+}
+
+.add-post-form .form-control {
+  border-radius: 4px;
+}
+
+.add-post-form .img-thumbnail {
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.add-post-form .image-preview {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+}
+
+.add-post-form .no-images {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  border: 2px dashed #6c757d;
+  border-radius: 4px;
+  color: #6c757d;
+}
+
+.add-post-form .submit-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-post-form .submit-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.add-post-form .submit-btn-spinner {
+  display: inline-block;
+  margin-right: 10px;
+}
